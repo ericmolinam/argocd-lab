@@ -14,7 +14,7 @@ spec:
       - path: apps/*
   template:
     metadata:
-      name: '{{.repository}}-{{.path.basename}}'
+      name: '{{.path.basename}}'
     spec:
       project: "default"
       source:
