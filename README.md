@@ -25,7 +25,7 @@
 
 ```
 
-### Three Layers Explained
+### Layers
 
 1. `/argocd`
    - Installs and configures ArgoCD itself
@@ -43,7 +43,7 @@
 
 ---
 
-## Project Structure
+## Structure
 
 ```
 argocd-lab/
