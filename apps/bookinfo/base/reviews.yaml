@@ -43,13 +43,6 @@ spec:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v1:1.16.4
         imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"        
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
@@ -92,13 +85,6 @@ spec:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v2:1.16.4
         imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"              
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
@@ -141,13 +127,6 @@ spec:
       - name: reviews
         image: docker.io/istio/examples-bookinfo-reviews-v3:1.16.4
         imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"              
         env:
         - name: LOG_DIR
           value: "/tmp/logs"
