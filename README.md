@@ -118,7 +118,7 @@ kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -
 Once ArgoCD is running, deploy the app-of-apps that bootstraps the gitops layer:
 
 ```bash
-kubectl apply -f argocd/app-of-apps/argocd-app.yaml
+kubectl apply -f argocd/app-of-apps/gitops-app.yaml
 ```
 
 This deploys the bootstrap Application that enables ArgoCD to manage itself and other applications.
