@@ -11,7 +11,7 @@ commonAnnotations:
 
 # Bookinfo resources (namespace, services, deployments, etc)
 resources:
-  - resources/namespace.yaml
+  - namespace.yaml
   - https://raw.githubusercontent.com/istio/istio/release-1.14/samples/bookinfo/platform/kube/bookinfo.yaml
   # If you want to apply Istio configuration on top of the bookinfo deployment, uncomment below lines (assuming you have Istio already installed)
   # - https://raw.githubusercontent.com/istio/istio/release-1.14/samples/bookinfo/networking/bookinfo-gateway.yaml
