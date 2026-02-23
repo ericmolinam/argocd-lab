@@ -6,6 +6,5 @@ commonLabels:
   app.kubernetes.io/managed-by: kustomize
 
 resources:
-  - app-of-apps/namespace.yaml
+  - namespace.yaml
   - https://raw.githubusercontent.com/argoproj/argo-cd/v3.3.1/manifests/install.yaml
-  - app-of-apps/argocd-app.yaml

@@ -97,17 +97,31 @@ cd argocd-lab
 
 #### 2. Deploy ArgoCD
 
-Deploy the ArgoCD installation along with the app-of-apps bootstrap application:
+Deploy the ArgoCD core installation:
 
 ```bash
-kubectl kubectl apply --server-side -k argocd/
+kubectl apply --server-side -k argocd/
 ```
 
 This command:
 - Creates the `argocd` namespace
 - Installs ArgoCD using the official manifests (v3.3.1)
-- Creates the `gitops` namespace
-- Deploys the app-of-apps that bootstraps everything
+
+Wait for ArgoCD to be ready before proceeding:
+
+```bash
+kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
+```
+
+#### 3. Deploy the App-of-Apps Bootstrap
+
+Once ArgoCD is running, deploy the app-of-apps that bootstraps the gitops layer:
+
+```bash
+kubectl apply -f argocd/app-of-apps/argocd-app.yaml
+```
+
+This deploys the bootstrap Application that enables ArgoCD to manage itself and other applications.
 
 #### 4. Access ArgoCD UI
 
