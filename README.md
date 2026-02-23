@@ -27,17 +27,17 @@
 
 ### Three Layers Explained
 
-1. **/argocd**
+1. `/argocd`
    - Installs and configures ArgoCD itself
    - Creates the initial "gitops" application that bootstraps everything else
    - Uses the app-of-apps pattern to manage itself and other apps
 
-2. **/gitops**
+2. `/gitops`
    - Contains the ApplicationSet that dynamically discovers applications
    - Uses git generator to scan `/apps` directory for new applications
    - Automatically creates ArgoCD Applications for each discovered app
 
-3. **/apps** (`/apps`)
+3. `/apps`
    - Contains individual applications (bookinfo, podinfo)
    - Each app has its own Kubernetes manifests
 
