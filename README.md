@@ -53,13 +53,12 @@ argocd-lab/
 │   ├── kustomization.yaml                 # Base Kustomize configuration
 │   ├── namespace.yaml                     # argocd namespace
 │   └── app-of-apps/
-│       ├── namespace.yaml                 # gitops namespace
-│       └── argocd-app.yaml                # Bootstraps the gitops app
+│       └── gitops-app.yaml                # Bootstraps the gitops app
 │
 ├── gitops/                                # App-of-Apps & ApplicationSets
 │   ├── kustomization.yaml                 # Kustomize base
 │   └── applicationsets/
-│       └── apps-git.yaml                  # ApplicationSet with git generator
+│       └── apps-git-generator.yaml        # ApplicationSet with git generator
 │
 └── apps/                                  # Deployed Applications
     ├── bookinfo/                          # Istio BookInfo sample app
