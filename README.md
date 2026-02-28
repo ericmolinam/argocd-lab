@@ -27,8 +27,9 @@
 ### Layers
 
 1. `/argocd`
-   - Creates namespaces
-   - Installs and configures ArgoCD
+   - Manages ArgoCD namespace and ConfigMaps
+   - Configures ArgoCD using Kustomize
+   - Contains namespace and configuration resources
 
 2. `/app-of-apps`
    - Contains the bootstrap Application that points to the gitops layer
@@ -45,9 +46,12 @@ argocd-lab/
 ├── README.md                              # This file
 │
 ├── argocd/                                # ArgoCD Installation & Configuration
-│   ├── kustomization.yaml                 # Base Kustomize configuration
-│   └── base/
-│       └── namespace.yaml                 # argocd namespace definition
+│   ├── kustomization.yaml                 # Kustomize configuration
+│   ├── namespace/
+│   │   └── argocd.yaml                    # ArgoCD namespace definition
+│   └── configmap/
+│       ├── argocd-cm.yaml                 # ArgoCD server configuration
+│       └── argocd-cmd-params-cm.yaml      # ArgoCD command parameters
 │
 └── app-of-apps/                           # App-of-Apps Bootstrap & GitOps Layer
     ├── gitops-app.yaml                    # Bootstrap Application (entry point)
