@@ -41,7 +41,7 @@ spec:
       serviceAccountName: bookinfo-details
       containers:
       - name: details
-        image: docker.io/istio/examples-bookinfo-details-v1:1.16.4
+        image: docker.io/istio/examples-bookinfo-details-v1:1.20.3
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
