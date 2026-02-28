@@ -4,20 +4,19 @@
 ```
 ┌────────────────────────────────────────┐
 │             argocd-lab                 │
-├──────────┬──────────────┬──────────────┤
-│          │              │              │
-│ /argocd  │ /gitops      │ /apps        │
-│          │              │              │
-└────┬─────┴──────┬───────┴────────┬─────┘
-     │            │                │
-     │            │             ┌──┴──────────────┐
-     │            │             │ - bookinfo/     │
-     │            │             │ - podinfo/      │
-     │            │             │ - [more apps]   │
-     │            │             └─────────────────┘
+├──────────┬──────────────────────────────┤
+│          │                              │
+│ /argocd  │     /app-of-apps            │
+│          │      (Bootstrap)             │
+│          │          │                   │
+│          │      /gitops                 │
+│          │          │                   │
+│          │     ApplicationSet            │
+│          │                              │
+└────┬─────┴──────┬───────────────────────┘
      │            │
-  ArgoCD         GitOps (app-of-apps)
-  Installation  ApplicationSet
+  ArgoCD         App-of-Apps
+  Installation   (Gitops Layer)
      │            │
      └────┬───────┘
           │
@@ -28,18 +27,14 @@
 ### Layers
 
 1. `/argocd`
-   - Installs and configures ArgoCD itself
-   - Creates the initial "gitops" application that bootstraps everything else
-   - Uses the app-of-apps pattern to manage itself and other apps
+   - Creates namespaces
+   - Installs and configures ArgoCD
 
-2. `/gitops`
-   - Contains the ApplicationSet that dynamically discovers applications
-   - Uses git generator to scan `/apps` directory for new applications
-   - Automatically creates ArgoCD Applications for each discovered app
+2. `/app-of-apps`
+   - Contains the bootstrap Application that points to the gitops layer
 
-3. `/apps`
-   - Contains individual applications (bookinfo, podinfo)
-   - Each app has its own Kubernetes manifests
+3. `/app-of-apps/gitops`
+   - Contains the ApplicationSet that dynamically discovers and manages applications
 
 ---
 
@@ -51,30 +46,15 @@ argocd-lab/
 │
 ├── argocd/                                # ArgoCD Installation & Configuration
 │   ├── kustomization.yaml                 # Base Kustomize configuration
-│   ├── namespace.yaml                     # argocd namespace
-│   └── app-of-apps/
-│       └── gitops-app.yaml                # Bootstraps the gitops app
+│   └── base/
+│       └── namespace.yaml                 # argocd namespace definition
 │
-├── gitops/                                # App-of-Apps & ApplicationSets
-│   ├── kustomization.yaml                 # Kustomize base
-│   └── applicationsets/
-│       └── apps-git-generator.yaml        # ApplicationSet with git generator
-│
-└── apps/                                  # Deployed Applications
-    ├── bookinfo/                          # Istio BookInfo sample app
-    │   ├── kustomization.yaml
-    │   └── base/
-    │       ├── productpage.yaml
-    │       ├── details.yaml
-    │       ├── ratings.yaml
-    │       └── reviews.yaml
-    │
-    └── podinfo/                           # Cloud native demo app
-        ├── kustomization.yaml
-        └── base/
-            ├── deployment.yaml
-            ├── service.yaml
-            └── hpa.yaml
+└── app-of-apps/                           # App-of-Apps Bootstrap & GitOps Layer
+    ├── gitops-app.yaml                    # Bootstrap Application (entry point)
+    └── gitops/                            # GitOps configuration layer
+        ├── kustomization.yaml             # Kustomize base
+        └── applicationsets/
+            └── apps-git-generator.yaml    # ApplicationSet with git generator
 ```
 
 ## Getting Started
@@ -114,13 +94,9 @@ kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -
 
 #### 3. Deploy the App-of-Apps Bootstrap
 
-Once ArgoCD is running, deploy the app-of-apps that bootstraps the gitops layer:
-
 ```bash
-kubectl apply -f argocd/app-of-apps/gitops-app.yaml -n argocd
+kubectl apply -f app-of-apps/gitops-app.yaml -n argocd
 ```
-
-This deploys the bootstrap Application that enables ArgoCD to manage itself and other applications.
 
 #### 4. Access ArgoCD UI
 
