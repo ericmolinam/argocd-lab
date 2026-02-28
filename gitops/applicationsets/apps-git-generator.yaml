@@ -6,6 +6,8 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
+  syncPolicy:
+    preserveResourcesOnDeletion: false
   generators:
   - git:
       repoURL: https://github.com/ericmolinam/argocd-lab.git
@@ -25,6 +27,9 @@ spec:
         server: https://kubernetes.default.svc
         namespace: '{{.path.basename}}'
       syncPolicy:
+        managedNamespaceMetadata:
+          labels:
+            argocd.argoproj.io/managed-by: argocd
         automated:
           prune: true
           selfHeal: true
