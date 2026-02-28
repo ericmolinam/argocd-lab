@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/ericmolinam/argocd-lab
     targetRevision: HEAD
-    path: gitops
+    path: app-of-apps/gitops
   destination:
     server: https://kubernetes.default.svc
     namespace: gitops

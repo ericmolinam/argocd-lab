@@ -10,7 +10,7 @@ spec:
     preserveResourcesOnDeletion: false
   generators:
   - git:
-      repoURL: https://github.com/ericmolinam/argocd-lab.git
+      repoURL: https://github.com/ericmolinam/argocd-lab-apps.git
       revision: HEAD
       directories:
       - path: apps/*
@@ -20,7 +20,7 @@ spec:
     spec:
       project: "default"
       source:
-        repoURL: https://github.com/ericmolinam/argocd-lab.git
+        repoURL: https://github.com/ericmolinam/argocd-lab-apps.git
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
