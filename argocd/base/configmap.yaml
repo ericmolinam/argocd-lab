@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  url: https://argocd.spike.local
+  helm.oci.enabled: "true"
+  resource.customizations.ignoreDifferences.argoproj.io_ApplicationSet: |
+    jsonPointers:
+      - /metadata/annotations/argocd.argoproj.io~1tracking-id
+      - /metadata/annotations/kubectl.kubernetes.io~1last-applied-configuration
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cmd-params-cm
+data:
+  server.insecure: "true"
+  applicationsetcontroller.requeue.after: "15m"
